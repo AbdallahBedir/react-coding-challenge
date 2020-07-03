@@ -119,7 +119,7 @@ function NavBar(props) {
                 ))}
               </TextField>
             </div>
-            <Autocomplete handleSearch={(q) => handleSearch({category,q})}/>
+            <Autocomplete handleSearch={(q) => handleSearch({category,q})} />
         </Toolbar>
       </>
   );

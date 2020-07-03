@@ -113,7 +113,7 @@ function Sidebar(props) {
         <div className={classes.root}>
             <div className={classes.toolbar}>
                 <Link href="#" onClick={(e) => {e.preventDefault()}}>
-                    <img className="logo" src="/logo.png" alt="USYtech" />
+                    <img className="logo" src="logo.png" alt="USYtech" />
                 </Link>
                 <Link href="#" onClick={(e) => {e.preventDefault()}}>
                     <img src={GroupArrow} alt="group arrow"/>
