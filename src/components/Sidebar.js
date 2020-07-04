@@ -162,7 +162,7 @@ function Sidebar(props) {
                         paper: classes.drawerPaper,
                     }}
                     ModalProps={{
-                    keepMounted: true, // Better open performance on mobile.
+                        keepMounted: true, // Better open performance on mobile.
                     }}
                 >
                     {drawer}

@@ -1,5 +1,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## Newsapi Coding challenge
+
+Simple app created with react.js that consuming [https://newsapi.org​/] API.
+
+## Introduction
+
+The searchbox and category select filters the news result, The search icon in searchbox is disabled unless 3 letters or more in typed in searchbox, after clicking the search button, we are sending a request to newsapi with the searched query, also if specific category is selected, it will be passed to the request.  
+
 ## Available Scripts
 
 In the project directory, you can run:
