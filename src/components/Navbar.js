@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
   subheader:{
     backgroundColor:theme.palette.grey[100],
     boxShadow:'0 0 4px 0 rgba(0, 0, 0, 0.18)'
+  },
+  category:{
+    backgroundColor: theme.palette.common.white,
+    width:'250px'
   }
 }));
 
@@ -100,26 +104,24 @@ function NavBar(props) {
         </Toolbar>
         <Toolbar className={classes.subheader}>
           <div className={classes.grow} />
-          <div className={classes.category}>
-            <TextField
-                id="standard-select-category"
-                select
-                value={category}
-                onChange={handleCategoryChange}
-                variant="outlined"
-                size="small"
-              >
-                <MenuItem value={' '}>
-                    Select Category
+          <TextField
+              className={classes.category}
+              select
+              value={category}
+              onChange={handleCategoryChange}
+              variant="outlined"
+              size="small"
+            >
+              <MenuItem value={' '}>
+                  Select Category
+              </MenuItem>
+              {categories.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
                 </MenuItem>
-                {categories.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-            <Autocomplete handleSearch={(q) => handleSearch({category,q})} />
+              ))}
+            </TextField>
+          <Autocomplete handleSearch={(q) => handleSearch({category,q})} />
         </Toolbar>
       </>
   );
