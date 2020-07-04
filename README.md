@@ -1,13 +1,23 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 
 ## Newsapi Coding challenge
 
-Simple app created with react.js that consuming [https://newsapi.org​/] API.
+Simple app created with react.js that consuming [https://newsapi.org​/](https://newsapi.org​/) API.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Introduction
 
 The searchbox and category select filters the news result, The search icon in searchbox is disabled unless 3 letters or more in typed in searchbox, after clicking the search button, we are sending a request to newsapi with the searched query, also if specific category is selected, it will be passed to the request.  
+
+## Future Improvements
+
+- Submit the form using enter key.
+- Add Loading indicator while fetching the news.
+- Display error messages and `No news match your result`.
+- Support routing `/news` with active route highlighted.
+- Expanded sidebar submenus.
+- Proptypes & defaultProps.
+- Profile menu that display items on clicking.
+- Search news as you type.
 
 ## Available Scripts
 
