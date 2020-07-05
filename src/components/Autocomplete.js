@@ -36,11 +36,17 @@ function Autocomplete({handleSearch}) {
     const [history,setHistory] = useState([]);  
 
     const handleSearchClick = (q) => {
-      handleSearch(q)
-      if(q){
-        if(history.indexOf(q) === -1){ // To remove duplications items in history
+      if(q && typeof(q) === 'string' && q.length >= 3){
+        handleSearch(q);
+        if(history.indexOf(q) === -1){ // To remove duplicate items in history
           setHistory([...history,q]) // Add to history search   
         }
+      }
+    }
+
+    const handleKeyDown = (key,q) => {
+      if(key === 'Enter'){
+        handleSearchClick(q)
       }
     }
 
@@ -72,6 +78,7 @@ function Autocomplete({handleSearch}) {
               <TextField
                 {...params}
                 label=""
+                onKeyDown={(event) => handleKeyDown(event.key,params && params.inputProps && params.inputProps.value)}
                 className={classes.searchbox}
                 variant="outlined"
                 fullWidth

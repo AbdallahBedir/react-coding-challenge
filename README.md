@@ -12,7 +12,7 @@ The searchbox and category select in subheader filters the news result, The sear
 ## Future Improvements
 
 - **[For mobile]** Minimize subheader controls to icons that expanded on click. 
-- Submit the form using enter key.
+- <s>Submit the form using enter key</s>.
 - Add Loading indicator while fetching the news.
 - Display error messages and `No news match your result`.
 - Support routing `/news` with active route highlighted.
