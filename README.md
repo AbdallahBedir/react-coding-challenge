@@ -16,7 +16,7 @@ The searchbox and category select in subheader filters the news result, The sear
 - Add Loading indicator while fetching the news.
 - Display error messages and `No news match your result`.
 - Support routing `/news` with active route highlighted.
-- Expanded sidebar submenus.
+- <s>Expanded sidebar submenus.</s>
 - Proptypes & defaultProps.
 - Profile menu that display items on clicking.
 - Search news as you type.

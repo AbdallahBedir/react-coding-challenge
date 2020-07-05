@@ -1,4 +1,7 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import SidebarItems from '../config/sidebarItems';
+// Material ui components
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -8,21 +11,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
+import Collapse from '@material-ui/core/Collapse';
 // SVG icons
-import IcChromeReader  from "../assets/icons/ic-chrome-reader-mode.svg";
-import IcCollectReviews  from "../assets/icons/ic-local-play-black-24-px.svg";
-import IcManageReviews from "../assets/icons/ic-manage-reviews.svg";
-import IcShowReviews  from "../assets/icons/ic-show-reviews.svg";
-import IcExtension  from "../assets/icons/ic-extension.svg";
-import IcPieChart from "../assets/icons/ic-pie-chart.svg";
-import IcFreeBreakfast from "../assets/icons/ic-free-breakfast.svg";
-import IcSettings from "../assets/icons/ic-settings.svg";
-import IcLabs from "../assets/icons/ic-labs.svg";
 import Ichelp from "../assets/icons/ic-help-black-24-px.svg";
 import GroupArrow from '../assets/icons/group_2.svg';
 import GroupArrowDark from '../assets/icons/group.svg';
-import ArrowRight from '../assets/icons/ic-chevron-right_2.svg';
+// Material ui icons
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 const drawerWidth = 256;
 
@@ -41,11 +37,12 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-between',
         '& img':{
             margin:theme.spacing(0,2),
-            '&.logo':{
+            '&$logo':{
                 height: '35px',
             }
         }
     },
+    logo:{},
     userToolbar:{
         padding:theme.spacing(1,2)
     },
@@ -58,62 +55,32 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'flex-end'
     },
+    submenuItem: {
+        paddingLeft: theme.spacing(4),
+    }
 }));
 
 function Sidebar(props) {
     const { mobileOpen, handleDrawerToggle } = props;
     const classes = useStyles();
 
-    const sidebarItems = [
-        {
-            text:'News',
-            icon:IcChromeReader
-        },
-        {
-            text:'Invitations',
-            icon:IcCollectReviews,
-            submenu:true
-        },
-        {
-            text:'Reviews',
-            icon:IcManageReviews,
-            submenu:true
-        },
-        {
-            text:'Show reviews',
-            icon:IcShowReviews,
-            submenu:true
-        },
-        {
-            text:'Apps & Integrations',
-            icon:IcExtension,
-            submenu:true
-        },
-        {
-            text:'Analytics',
-            icon:IcPieChart,
-            submenu:true
-        },
-        {
-            text:'Tips and Ideas',
-            icon:IcFreeBreakfast
-        },
-        {
-            text:'Settings',
-            icon:IcSettings,
-            submenu:true
-        },
-        {
-            text:'Labs',
-            icon:IcLabs,
-            submenu:true
-        },
-    ] 
+    const [items, setItems] = React.useState(SidebarItems);
+
+    const handleItemClick = (hasSubmenu,index) => {
+        if(!hasSubmenu) return;
+        let oldItems = [...items];
+        oldItems = oldItems.map((item,i) => ({
+            ...item,
+            isOpen: i === index ? !item.isOpen : false // Close all expanded items and toggle the clicked one
+        }))
+        setItems(oldItems)
+    }
+
     const drawer = (
         <div className={classes.root}>
             <div className={classes.toolbar}>
                 <Link href="#" onClick={(e) => {e.preventDefault()}}>
-                    <img className="logo" src="logo.png" alt="USYtech" />
+                    <img className={classes.logo} src="logo.png" alt="USYtech" />
                 </Link>
                 <Link href="#" onClick={(e) => {e.preventDefault()}}>
                     <img src={GroupArrow} alt="group arrow"/>
@@ -124,16 +91,35 @@ function Sidebar(props) {
             </div>
             <Divider />
             <List>
-                {sidebarItems.map(item => (
-                    <ListItem button key={item.text}>
-                        <ListItemIcon>
-                            <img src={item.icon} alt={item.text} />                
-                        </ListItemIcon>
-                        <ListItemText primary={item.text} />
-                        {item.submenu && 
-                            <img src={ArrowRight} alt={item.text} />
+                {items.map((item,index) => (
+                    <React.Fragment key={item.text + index}>
+                        <ListItem button onClick={() => handleItemClick(item.submenu,index)}
+                            selected={item.isOpen || index === 0}>
+                            <ListItemIcon>
+                                <img src={item.icon} alt={item.text} />                
+                            </ListItemIcon>
+                            <ListItemText primary={item.text} />
+                            {item.submenu ?  (
+                                item.isOpen ? <KeyboardArrowDownIcon /> : <KeyboardArrowRightIcon />
+                            ) : null}
+                        </ListItem>
+                        {
+                            item.submenu && (
+                                <Collapse in={item.isOpen} timeout="auto" unmountOnExit>
+                                    <List disablePadding>
+                                        {item.submenu.map((submenuItem,i) => (
+                                            <ListItem key={submenuItem.text+index+i} button className={classes.submenuItem}>
+                                                <ListItemIcon>
+                                                    <img src={submenuItem.icon} alt={submenuItem.text} />
+                                                </ListItemIcon>
+                                                <ListItemText primary={submenuItem.text} />
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </Collapse>
+                            )
                         }
-                    </ListItem>
+                    </React.Fragment>
                 ))}
             </List>
             <List className={classes.supportList}>

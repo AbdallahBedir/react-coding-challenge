@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Sidebar from '../components/Sidebar';
 import NavBar from '../components/Navbar';
 import News from './News';
-import API from '../api';
+import API from '../config/api';
 
 const drawerWidth = 256;
 
