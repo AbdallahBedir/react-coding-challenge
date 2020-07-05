@@ -50,24 +50,28 @@ const useStyles = makeStyles((theme) => ({
 function Layout(props) {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
   const [news,setNews] = useState([]);
+  const [loading,setLoading] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const handleSearch = (params) => {
-    // TODO: Display loading
+    setLoading(true)
     if(!params.category || !params.category.trim()){
       delete params.category;
     }
     API.get('top-headlines',{params}).then(response => {
         if(response && response.data && response.data.articles){
           setNews(response.data.articles)
+          setLoading(false)
         }
-    }).catch(err => {
+    }).catch(error => {
         setNews([])
-        // TODO: Handle error 
+        setLoading(false)
+        // Log error.response 
     })
   }
 
@@ -83,7 +87,7 @@ function Layout(props) {
       <main className={classes.content}>
           <div className={classes.toolbar} />
           <div className={classes.toolbar} />
-          <News data={news}/>
+          <News data={news} loading={loading}/>
       </main>
     </div>
   );
