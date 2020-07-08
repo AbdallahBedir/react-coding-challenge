@@ -1,25 +1,39 @@
 /* eslint-disable no-use-before-define */
 import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
 import MuiAutocomplete from '@material-ui/lab/Autocomplete';
-import SearchIcon from '@material-ui/icons/Search';
+// Material UI core
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles} from '@material-ui/core/styles';
+// Material UI Icons
 import CloseIcon from '@material-ui/icons/Close';
-import InputAdornment from "@material-ui/core/InputAdornment";
+import SearchIcon from '@material-ui/icons/Search';
 
 
 const useStyles = makeStyles((theme) => ({
+  autocomplete:{
+    width:'300px',
+    [theme.breakpoints.down('xs')]:{
+      width:'100%'
+    }
+  },
   searchbox: {
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.common.white,    
     display:'flex',
     marginLeft: theme.spacing(1),
     width: 'auto',
-    '& .MuiOutlinedInput-root':{
-      paddingRight: ['20px','!important']
+    '& $outlinedInput':{
+      backgroundColor: theme.palette.common.white,    
+      paddingRight: ['10px','!important'],
+      [theme.breakpoints.down('xs')]:{
+        paddingRight: ['2px','!important'],
+        paddingLeft: ['10px','!important'],
+        borderRadius: '25px'
+      }
     }
   },
+  outlinedInput:{},
   autocompleteOption:{
     display:'flex',
     width: '100%',
@@ -31,8 +45,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Autocomplete({handleSearch}) {
+function Autocomplete({isDesktop,handleSearch}) {
     const classes = useStyles();
+    // History search would be like ['trump','US','Covid']
     const [history,setHistory] = useState([]);  
 
     const handleSearchClick = (q) => {
@@ -56,9 +71,9 @@ function Autocomplete({handleSearch}) {
     }
 
     return (
-      <>
+      <React.Fragment>
         <MuiAutocomplete   
-          id="free-solo-demo"    
+          className={classes.autocomplete}  
           selectOnFocus
           handleHomeEndKeys
           options={history}
@@ -71,24 +86,24 @@ function Autocomplete({handleSearch}) {
               </IconButton>
             </div>
           )}
-          style={{ width: 300 }}
           freeSolo
           renderInput={params => {
             return (
               <TextField
                 {...params}
-                label=""
                 onKeyDown={(event) => handleKeyDown(event.key,params && params.inputProps && params.inputProps.value)}
                 className={classes.searchbox}
                 variant="outlined"
                 fullWidth
                 size="small"
-                placeholder="Search"
+                color="secondary"
+                label={isDesktop ? 'Search' : ''}
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton disabled={ // Disable submit button if value < 3 letters
+                      <IconButton 
+                        disabled={ // Disable submit button if value < 3 letters
                           (params && params.inputProps && params.inputProps.value &&
                           params.inputProps.value.length < 3) || (!params.inputProps.value)
                         }
@@ -97,13 +112,16 @@ function Autocomplete({handleSearch}) {
                               <SearchIcon />
                       </IconButton>
                     </InputAdornment>
-                  )
+                  ),
+                  classes:{
+                    root:classes.outlinedInput,
+                  }
                 }}
               />
             );
           }}
         />
-      </>
+      </React.Fragment>
     );
 }
 

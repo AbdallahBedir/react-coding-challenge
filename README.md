@@ -11,7 +11,7 @@ The searchbox and category select in subheader filters the news result, The sear
 
 ## Future Improvements
 
-- **[For mobile]** Minimize subheader controls to icons that expanded on click. 
+- <s>**[For mobile]** Minimize subheader controls to icons that expanded on click.</s> 
 - <s>Submit the form using enter key.</s>
 - <s>Add Loading indicator while fetching the news.</s>
 - <s>Display error messages and `No news match your search`.</s>

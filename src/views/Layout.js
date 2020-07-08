@@ -60,9 +60,7 @@ function Layout(props) {
 
   const handleSearch = (params) => {
     setLoading(true)
-    if(!params.category || !params.category.trim()){
-      delete params.category;
-    }
+    if(!params.category) delete params.category;
     API.get('top-headlines',{params}).then(response => {
         if(response && response.data && response.data.articles){
           setNews(response.data.articles)

@@ -1,16 +1,22 @@
 import React,{useState} from 'react';
+import Autocomplete from './Autocomplete';
+import Categories from '../config/categories';
+// Material UI core
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles ,useTheme } from '@material-ui/core/styles';
+// Material UI Icons
+import FilterListIcon from '@material-ui/icons/FilterList';
+import CloseIcon from '@material-ui/icons/Close';
+import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuIcon from '@material-ui/icons/Menu';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles} from '@material-ui/core/styles';
-import Autocomplete from './Autocomplete';
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
@@ -32,45 +38,67 @@ const useStyles = makeStyles((theme) => ({
     boxShadow:'0 0 4px 0 rgba(0, 0, 0, 0.18)'
   },
   category:{
+    width:'100%',
+    [theme.breakpoints.up('sm')]:{
+      backgroundColor: theme.palette.common.white,
+      width:'250px',
+    }
+  },
+  mobileIcon:{
     backgroundColor: theme.palette.common.white,
-    width:'250px'
+    border:`1px solid ${theme.palette.grey[300]}`
+  },
+  hide:{
+    display:'none'
+  },
+  show:{
+    display:'flex',
+    width: '100%',
+    alignItems: 'center'
   }
 }));
 
 function NavBar(props) {
+  const { handleDrawerToggle , handleSearch } = props;
+  
   const classes = useStyles();
-  const [category,setCategory] = useState(' ');
-  const { handleDrawerToggle , handleSearch} = props;
 
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const [category,setCategory] = useState('');
+
+  const [showCategory,setShowCategory] = useState(false); // If category select is expanded
+  
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
   }
 
-  const categories = [
-    {
-      value: 'business',
-      label: 'Business',
-    },
-    {
-      value: 'entertainment',
-      label: 'Entertainment',
-    },
-    {
-      value: 'health',
-      label: 'Health',
-    },
-    {
-      value: 'technology',
-      label: 'Technology',
-    },
-    {
-      value: 'sports',
-      label: 'Sports'
-    }
-  ]
+  const categorySelect = (
+    <TextField
+        className={classes.category}
+        select
+        label="Select category"
+        value={category}
+        onChange={handleCategoryChange}
+        variant={isDesktop ? 'outlined' : 'standard'}
+        size="small"
+        color="secondary"
+      >
+      <MenuItem value="">
+        Select category
+      </MenuItem>
+      {Categories.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label}
+        </MenuItem>
+      ))}
+    </TextField>
+  )
 
   return (
-      <>
+     <React.Fragment>
+      {/* Header */}
         <Toolbar>
             <IconButton
                 color="inherit"
@@ -102,28 +130,36 @@ function NavBar(props) {
                 </IconButton>
             </div>
         </Toolbar>
+        {/* Subheader */}
         <Toolbar className={classes.subheader}>
           <div className={classes.grow} />
-          <TextField
-              className={classes.category}
-              select
-              value={category}
-              onChange={handleCategoryChange}
-              variant="outlined"
-              size="small"
-            >
-              <MenuItem value={' '}>
-                  Select Category
-              </MenuItem>
-              {categories.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          <Autocomplete handleSearch={(q) => handleSearch({category,q})} />
+          {isDesktop ? (
+              <React.Fragment>
+                {categorySelect}
+                <Autocomplete isDesktop={true} handleSearch={(q) => handleSearch({category,q})} />
+            </React.Fragment>
+          ) : 
+          /* Show/Hide category select with css to keep the controls in the DOM and keep the searchbox value */
+          <React.Fragment>
+            <div className={showCategory ? classes.hide : classes.show}>
+                <IconButton 
+                  className={classes.mobileIcon} 
+                  onClick={() => setShowCategory(!showCategory)}
+                  size="small">
+                  <FilterListIcon />
+                </IconButton>
+                <Autocomplete isDesktop={false} handleSearch={(q) => handleSearch({category,q})} />
+            </div>
+            <div className={showCategory ? classes.show : classes.hide}>
+                {categorySelect}
+                <IconButton onClick={() => setShowCategory(!showCategory)}>
+                    <CloseIcon />
+                </IconButton>
+            </div>
+          </React.Fragment>      
+          }
         </Toolbar>
-      </>
+      </React.Fragment>
   );
 }
 

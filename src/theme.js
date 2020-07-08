@@ -1,5 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
+const defaultTheme = createMuiTheme();
+
 const theme = createMuiTheme({
     palette:{
         type:'light',
@@ -19,7 +21,21 @@ const theme = createMuiTheme({
     },
     shape:{
         borderRadius:2
-    }
+    },
+    overrides: {
+        // Style sheet name ⚛️
+        MuiOutlinedInput: {
+            // Name of the rule
+            notchedOutline: {
+                // Some CSS
+                borderColor:defaultTheme.palette.grey[300]
+            }
+        },
+        MuiInputLabel:{
+            root:{
+                color:'#aeaeae'
+            }
+        }
+    },
 })
-
 export default theme;
