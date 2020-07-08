@@ -13,9 +13,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Link from '@material-ui/core/Link';
 import Collapse from '@material-ui/core/Collapse';
 // SVG icons
-import Ichelp from "../assets/icons/ic-help-black-24-px.svg";
-import GroupArrow from '../assets/icons/group_2.svg';
-import GroupArrowDark from '../assets/icons/group.svg';
+import { ReactComponent as IcHelp } from "../assets/icons/ic-help-black.svg";
+import { ReactComponent as GroupArrow } from '../assets/icons/group_2.svg';
+import { ReactComponent as GroupArrowDark } from '../assets/icons/group.svg';
 // Material ui icons
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -35,13 +35,14 @@ const useStyles = makeStyles((theme) => ({
         display:'flex',
         alignItems: 'center',
         justifyContent:'space-between',
-        '& img':{
+        '& $toolbarItem':{
             margin:theme.spacing(0,2),
-            '&$logo':{
+            '& $logo':{
                 height: '35px',
             }
         }
     },
+    toolbarItem:{},
     logo:{},
     userToolbar:{
         padding:theme.spacing(1,2)
@@ -57,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
     },
     submenuItem: {
         paddingLeft: theme.spacing(4),
+    },
+    primaryColor:{
+        color:theme.palette.primary.main
+    },
+    defaultColor:{ // sidebar icon color
+        color:theme.palette.grey[500]
     }
 }));
 
@@ -79,11 +86,11 @@ function Sidebar(props) {
     const drawer = (
         <div className={classes.root}>
             <div className={classes.toolbar}>
-                <Link href="#" onClick={(e) => {e.preventDefault()}}>
+                <Link href="#" className={classes.toolbarItem} onClick={(e) => {e.preventDefault()}}>
                     <img className={classes.logo} src="logo.png" alt="USYtech" />
                 </Link>
-                <Link href="#" onClick={(e) => {e.preventDefault()}}>
-                    <img src={GroupArrow} alt="group arrow"/>
+                <Link href="#" className={classes.toolbarItem} onClick={(e) => {e.preventDefault()}}>                    
+                    <GroupArrow />
                 </Link>
             </div>
             <div className={classes.userToolbar}>
@@ -95,8 +102,8 @@ function Sidebar(props) {
                     <React.Fragment key={item.text + index}>
                         <ListItem button onClick={() => handleItemClick(item.submenu,index)}
                             selected={item.isOpen || index === 0}>
-                            <ListItemIcon>
-                                <img src={item.icon} alt={item.text} />                
+                            <ListItemIcon classes={{root:item.isOpen || index === 0 ? classes.primaryColor : classes.defaultColor}}>
+                                {item.icon}
                             </ListItemIcon>
                             <ListItemText primary={item.text} />
                             {item.submenu ?  (
@@ -109,8 +116,8 @@ function Sidebar(props) {
                                     <List disablePadding>
                                         {item.submenu.map((submenuItem,i) => (
                                             <ListItem key={submenuItem.text+index+i} button className={classes.submenuItem}>
-                                                <ListItemIcon>
-                                                    <img src={submenuItem.icon} alt={submenuItem.text} />
+                                                <ListItemIcon classes={{root:classes.defaultColor}}>
+                                                    {submenuItem.icon}
                                                 </ListItemIcon>
                                                 <ListItemText primary={submenuItem.text} />
                                             </ListItem>
@@ -125,11 +132,11 @@ function Sidebar(props) {
             <List className={classes.supportList}>
                 {['Support'].map(text => (
                 <ListItem button key={text}>
-                    <ListItemIcon>
-                        <img src={Ichelp} alt="support" />
+                    <ListItemIcon classes={{root:classes.defaultColor}}>
+                        <IcHelp />
                     </ListItemIcon>
                     <ListItemText primary={text} />
-                    <img src={GroupArrowDark} alt="group arrow" />
+                    <GroupArrowDark />
                 </ListItem>
                 ))}
             </List>

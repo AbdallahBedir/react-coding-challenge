@@ -48,7 +48,7 @@ const News = ({data,loading}) => {
                                 <CardActionArea>
                                     <CardMedia
                                         className={classes.media}
-                                        image={headline.urlToImage || '/img-copy.svg'}
+                                        image={headline.urlToImage || '/img-placeholder.svg'}
                                         title={headline.title}
                                     />
                                     <CardContent>
