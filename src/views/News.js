@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Link from '@material-ui/core/Link';
+import imgPlaceholder from '../assets/imgs/img-placeholder.svg'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -48,7 +49,7 @@ const News = ({data,loading}) => {
                                 <CardActionArea>
                                     <CardMedia
                                         className={classes.media}
-                                        image={headline.urlToImage || '/img-placeholder.svg'}
+                                        image={headline.urlToImage || imgPlaceholder}
                                         title={headline.title}
                                     />
                                     <CardContent>
