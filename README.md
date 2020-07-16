@@ -1,4 +1,3 @@
-
 ## Newsapi Coding challenge
 
 Simple app created with react.js that consuming [https://newsapi.org​/](https://newsapi.org​/) API.
@@ -7,11 +6,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Introduction
 
-The searchbox and category select in subheader filters the news result, The search icon in searchbox is disabled unless 3 letters or more are typed in searchbox, after clicking the search button, we are sending a request to newsapi with the searched query, also if specific category is selected, it will be passed to the request.  
+The searchbox and category select in subheader filters the news result, The search icon in searchbox is disabled unless 3 letters or more are typed in searchbox, after clicking the search button, we are sending a request to newsapi with the searched query, also if specific category is selected, it will be passed to the request.
 
 ## Future Improvements
 
-- <s>**[For mobile]** Minimize subheader controls to icons that expanded on click.</s> 
+- <s>**[For mobile]** Minimize subheader controls to icons that expanded on click.</s>
 - <s>Submit the form using enter key.</s>
 - <s>Add Loading indicator while fetching the news.</s>
 - <s>Display error messages and `No news match your search`.</s>
@@ -28,8 +27,8 @@ Because we're serving tha app at github pages [https://abdallahbedir.github.io/r
 The following are exceptions thrown while managing to fix:
 
 - xhr.js:178 Mixed Content: The page at 'https://abdallahbedir.github.io/react-coding-challenge/' was loaded over HTTPS, but requested an insecure XMLHttpRequest endpoint 'http://newsapi.org/v2/top-headlines?q=test'. This request has been blocked; the content must be served over HTTPS.
--  Access to XMLHttpRequest at 'https://newsapi.org/v2/top-headlines?q=test' from origin 'https://abdallahbedir.github.io' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: It does not have HTTP ok status.
-- https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?q=test  `426 Upgrade Required`
+- Access to XMLHttpRequest at 'https://newsapi.org/v2/top-headlines?q=test' from origin 'https://abdallahbedir.github.io' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: It does not have HTTP ok status.
+- https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?q=test `426 Upgrade Required`
 
 ## Available Scripts
 
